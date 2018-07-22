@@ -1,2 +1,5 @@
-<app-photo url="https://goo.gl/Pn3fzq" description="Leão"></app-photo>
-<app-photo url="https://goo.gl/JPGe5Q" description="Leoa"></app-photo>
+<app-photo  
+    *ngFor="let photo of photos" 
+    [url]="photo.url" 
+    [description]="photo.description">
+</app-photo>
