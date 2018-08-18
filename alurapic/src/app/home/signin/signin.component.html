@@ -3,7 +3,7 @@
 <form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
 
   <div class="form-group">
-    <input formControlName="userName" class="form-control" placeholder="user name" autofocus>
+    <input #userNameInput formControlName="userName" class="form-control" placeholder="user name" autofocus>
     <app-vmessage
       *ngIf="loginForm.get('userName').errors?.required"
       text="User Name is Required!">
@@ -21,7 +21,10 @@
   <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block">
     login
   </button>
-
+  <app-vmessage
+    *ngIf="loginInvalido"
+    text="Invalid user name or password!">
+</app-vmessage>
 </form>
 
 <p>Not a user?

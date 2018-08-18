@@ -4,13 +4,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SigninComponent } from './signin/signin.component';
 import { VmessageModule } from '../shared/components/vmessage/vmessage.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [ SigninComponent ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        VmessageModule
+        VmessageModule,
+        RouterModule
     ],
     exports: [],
     providers: [],
