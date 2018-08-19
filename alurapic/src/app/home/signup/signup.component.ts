@@ -41,4 +41,8 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  signup() {
+    const newUser = this.signupForm.getRawValue();
+  }
+
 }
