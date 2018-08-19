@@ -22,7 +22,7 @@ export class UserService {
   }
 
   getUser() {
-
+    return this.userSubject.asObservable();
   }
 
   private decodeAndNotify() {
