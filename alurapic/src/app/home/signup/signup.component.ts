@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { lowerCaseValidator } from '../../shared/validators/lower-case.validator';
+import { UserNotTakenValidatorService } from './user-not-taken.validator.service';
 
 @Component({
   templateUrl: './signup.component.html'
@@ -9,32 +10,35 @@ export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private userNotTakenValidatorService: UserNotTakenValidatorService) { }
 
   ngOnInit() {
-      this.signupForm = this.formBuilder.group({
-        email: ['', [
+    this.signupForm = this.formBuilder.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      fullName: ['', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(40)
+      ]],
+      userName: ['', [
           Validators.required,
-          Validators.email
-        ]],
-        fullName: ['', [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(40)
-        ]],
-        userName: ['', [
-          Validators.required,
-          // Validators.pattern(/^[a-z0-9_\-]+$/),
           lowerCaseValidator,
           Validators.minLength(2),
           Validators.maxLength(10)
-        ]],
-        password: ['', [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(14),
-        ]]
-      });
+        ],
+        this.userNotTakenValidatorService.chcekUserNameTaken()
+      ],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(14),
+      ]]
+    });
   }
 
 }
