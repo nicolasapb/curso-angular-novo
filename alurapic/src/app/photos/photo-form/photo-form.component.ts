@@ -8,6 +8,8 @@ import { PlatformDetectorService } from '../../core/platform-detector/platform-d
 export class PhotoFormComponent implements OnInit {
 
   photoForm: FormGroup;
+  file: File;
+
   @ViewChild('descriptionInput') descriptionInput: ElementRef<HTMLInputElement>;
 
   constructor(private formBuilder: FormBuilder,
@@ -23,6 +25,14 @@ export class PhotoFormComponent implements OnInit {
     // tslint:disable-next-line:no-unused-expression
     this.platformDetectorService.isPlatformBrowser() &&
         this.descriptionInput.nativeElement.focus();
+  }
+
+  upload() {
+    const description = this.photoForm.get('description').value;
+    const allowComments = this.photoForm.get('allowComments').value;
+    console.log(description);
+    console.log(allowComments);
+    console.log(this.file);
   }
 
 }
