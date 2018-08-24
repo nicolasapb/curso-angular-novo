@@ -13,7 +13,7 @@ import { PlatformDetectorService } from '../../core/platform-detector/platform-d
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
-  @ViewChild('#emailInput') emailInput: ElementRef<HTMLInputElement>;
+  @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +47,9 @@ export class SignupComponent implements OnInit {
         Validators.maxLength(14),
       ]]
     });
+    // tslint:disable-next-line:no-unused-expression
+    this.platformDetectorService.isPlatformBrowser() &&
+        this.emailInput.nativeElement.focus();
   }
 
   signup() {
