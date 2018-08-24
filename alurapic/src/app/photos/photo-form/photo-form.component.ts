@@ -11,6 +11,7 @@ export class PhotoFormComponent implements OnInit {
 
   photoForm: FormGroup;
   file: File;
+  preview: string;
 
   @ViewChild('descriptionInput') descriptionInput: ElementRef<HTMLInputElement>;
 
@@ -45,5 +46,12 @@ export class PhotoFormComponent implements OnInit {
           alert('somenthing went wrong ):');
         }
       );
+  }
+
+  handleFile(file: File) {
+    this.file = file;
+    const reader = new FileReader();
+    reader.onload = (event: any) => this.preview = event.target.result;
+    reader.readAsDataURL(file);
   }
 }
