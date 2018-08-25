@@ -10,7 +10,14 @@
         <hr>
       </small>
 
-      <app-photo-comments [photoId]="photoId"></app-photo-comments>
+      <app-photo-comments
+        *ngIf="photo.allowComments; else warnning"
+        [photoId]="photoId">
+      </app-photo-comments>
+
+      <ng-template #warnning>
+        <p>User has disabled comments for this photo</p>
+      </ng-template>
 
     </div>
   </div>
