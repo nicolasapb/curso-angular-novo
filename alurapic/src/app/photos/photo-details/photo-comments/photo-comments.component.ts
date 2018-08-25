@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 
 import { PhotoService } from '../../photo/photo.service';
 import { PhotoComment } from '../../photo/photo-comment';
+import { Photo } from '../../photo/photo';
 
 @Component({
     selector: 'app-photo-comments',
@@ -14,6 +15,7 @@ import { PhotoComment } from '../../photo/photo-comment';
 export class PhotoCommentsComponent implements OnInit {
 
     @Input() photoId: number;
+    @Input() photo: Photo;
 
     comments$: Observable<PhotoComment[]>;
     commentForm: FormGroup;
