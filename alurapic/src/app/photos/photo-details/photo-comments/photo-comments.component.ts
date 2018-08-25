@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { PhotoService } from '../../photo/photo.service';
 import { PhotoComment } from '../../photo/photo-comment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PlatformDetectorService } from '../../../core/platform-detector/platform-detector.service';
 
 @Component({
     selector: 'app-photo-comments',
@@ -13,14 +12,11 @@ export class PhotoCommentsComponent implements OnInit {
 
     @Input() photoId: number;
 
-    @ViewChild('commentInput') commentInput: ElementRef<HTMLInputElement>;
-
     comments$: Observable<PhotoComment[]>;
     commentForm: FormGroup;
 
     constructor(
         private photoService: PhotoService,
-        private platformDetectorService: PlatformDetectorService,
         private formBuilder: FormBuilder) { }
 
     ngOnInit(): void {
@@ -31,9 +27,17 @@ export class PhotoCommentsComponent implements OnInit {
                 Validators.maxLength(300)]
             ]
         });
-        // tslint:disable-next-line:no-unused-expression
-        // this.platformDetectorService.isPlatformBrowser() &&
-        //     this.commentInput.nativeElement.focus();
+    }
 
+    save() {
+        const comment = this.commentForm.get('comment').value as string;
+        console.log(comment);
+        this.photoService
+            .addComment(this.photoId, comment)
+            .subscribe(
+                () => {
+                    this.commentForm.reset();
+                    alert('comment added');
+                });
     }
 }
