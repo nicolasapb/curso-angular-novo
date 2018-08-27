@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlatformDetectorService } from '../../core/platform-detector/platform-detector.service';
 import { PhotoService } from '../photo/photo.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../shared/components/alert/alert.service';
+import { UserService } from '../../core/user/user.service';
 
 @Component({
   templateUrl: './photo-form.component.html'
@@ -19,7 +21,9 @@ export class PhotoFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private platformDetectorService: PlatformDetectorService,
     private photoService: PhotoService,
-    private router: Router) { }
+    private router: Router,
+    private alertService: AlertService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.photoForm = this.formBuilder.group({
@@ -39,11 +43,14 @@ export class PhotoFormComponent implements OnInit {
     this.photoService
       .upload(description, allowComments, this.file)
       .subscribe(
-        () => this.router.navigate(['']),
+        () => {
+          this.alertService.success('Photo uploaded!', true);
+          this.router.navigate(['/user', this.userService.getUserName()]);
+        },
         err => {
           console.log(err);
           this.photoForm.reset();
-          alert('somenthing went wrong ):');
+          this.alertService.warning('somenthing went wrong ):');
         }
       );
   }

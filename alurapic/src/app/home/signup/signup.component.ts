@@ -6,6 +6,7 @@ import { NewUser } from './new-user';
 import { SignUpService } from './signup.service';
 import { Router } from '@angular/router';
 import { PlatformDetectorService } from '../../core/platform-detector/platform-detector.service';
+import { AlertService } from '../../shared/components/alert/alert.service';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -21,7 +22,8 @@ export class SignupComponent implements OnInit {
     private userNotTakenValidatorService: UserNotTakenValidatorService,
     private signupService: SignUpService,
     private router: Router,
-    private platformDetectorService: PlatformDetectorService) { }
+    private platformDetectorService: PlatformDetectorService,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -59,8 +61,9 @@ export class SignupComponent implements OnInit {
         .signup(newUser)
         .subscribe(
           () => {
+            this.alertService.success('new user created with succes', true);
             this.router.navigate(['']);
-            alert('new user created with success');
+            // alert('new user created with success');
           },
           err => {
             console.log('erro', err);
@@ -68,7 +71,8 @@ export class SignupComponent implements OnInit {
             // tslint:disable-next-line:no-unused-expression
             this.platformDetectorService.isPlatformBrowser() &&
                 this.emailInput.nativeElement.focus();
-            alert('Something went wrong ):');
+            // alert('Something went wrong ):');
+            this.alertService.danger('Something went wrong ):');
           });
   }
 

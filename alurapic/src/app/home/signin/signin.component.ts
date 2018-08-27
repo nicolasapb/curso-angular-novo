@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import { PlatformDetectorService } from '../../core/platform-detector/platform-detector.service';
+import { AlertService } from '../../shared/components/alert/alert.service';
 
 @Component({
     templateUrl: './signin.component.html'
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router,
-        private platformDetectorService: PlatformDetectorService) { }
+        private platformDetectorService: PlatformDetectorService,
+        private alertService: AlertService) { }
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
@@ -38,7 +40,7 @@ export class SigninComponent implements OnInit {
             .subscribe(
                 () => {
                     this.loginInvalido = false;
-                    // this.router.navigateByUrl('user/' + userName);
+                    this.alertService.success('Welome ' + userName + '!', true);
                     this.router.navigate(['user', userName]);
                 },
                 err => {
@@ -47,7 +49,8 @@ export class SigninComponent implements OnInit {
                     // tslint:disable-next-line:no-unused-expression
                     this.platformDetectorService.isPlatformBrowser() &&
                         this.userNameInput.nativeElement.focus();
-                    alert('Invalid user name or password!');
+                    // alert('Invalid user name or password!');
+                    this.alertService.danger('Invalid user name or password!');
                     this.loginInvalido = true;
             });
     }
