@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
-
 import { environment } from '../../../environments/environment';
 
 const API = environment.ApiUrl;
@@ -19,7 +18,7 @@ export class AuthService {
 
     return this.http
       .post(
-        API + 'user/login',
+        API + '/user/login',
         {userName, password},
         {observe: 'response'}
       )
