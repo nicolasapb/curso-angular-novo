@@ -15,6 +15,5 @@ export class MenuComponent implements OnInit {
 
     toggle() {
         this.isShown = !this.isShown;
-        console.log(this.isShown);
     }
 }
