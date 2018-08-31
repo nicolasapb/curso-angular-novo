@@ -56,24 +56,27 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    const newUser = this.signupForm.getRawValue() as NewUser;
-    this.signupService
-        .signup(newUser)
-        .subscribe(
-          () => {
-            this.alertService.success('new user created with succes', true);
-            this.router.navigate(['']);
-            // alert('new user created with success');
-          },
-          err => {
-            console.log('erro', err);
-            this.signupForm.reset();
-            // tslint:disable-next-line:no-unused-expression
-            this.platformDetectorService.isPlatformBrowser() &&
-                this.emailInput.nativeElement.focus();
-            // alert('Something went wrong ):');
-            this.alertService.danger('Something went wrong ):');
-          });
+
+    if (this.signupForm.valid && !this.signupForm.pending) {
+      const newUser = this.signupForm.getRawValue() as NewUser;
+      this.signupService
+          .signup(newUser)
+          .subscribe(
+            () => {
+              this.alertService.success('new user created with succes', true);
+              this.router.navigate(['']);
+              // alert('new user created with success');
+            },
+            err => {
+              console.log('erro', err);
+              this.signupForm.reset();
+              // tslint:disable-next-line:no-unused-expression
+              this.platformDetectorService.isPlatformBrowser() &&
+                  this.emailInput.nativeElement.focus();
+              // alert('Something went wrong ):');
+              this.alertService.danger('Something went wrong ):');
+            });
+    }
   }
 
 }
