@@ -7,7 +7,7 @@
       text="E-mail is required!">
     </app-vmessage>
     <app-vmessage
-      *ngIf="signupForm.get('email').errors?.email"
+      *ngIf="signupForm.get('email').errors?.email && (form.submitted || signupForm.get('email').touched)"
       text="E-mail is invalid!">
     </app-vmessage>
   </div>
